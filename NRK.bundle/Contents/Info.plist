@@ -19,6 +19,6 @@
     <key>PlexPluginMode</key>
     <string>AlwaysOn</string>
     <key>PlexPluginDebug</key>
-    <string>1</string>
+    <string>0</string>
   </dict>
 </plist>
