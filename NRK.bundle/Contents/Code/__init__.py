@@ -70,29 +70,12 @@ def MainMenu():
     
     return dir
 
-"""
-# see:
-#  http://dev.plexapp.com/docs/Functions.html#CreatePrefs
-#  http://dev.plexapp.com/docs/mod_Prefs.html#Prefs.Add
-def CreatePrefs():
-    Prefs.Add(id='username', type='text', default='', label='Your Username')
-    Prefs.Add(id='password', type='text', default='', label='Your Password', option='hidden')
 
-# see:
-#  http://dev.plexapp.com/docs/Functions.html#ValidatePrefs
+def CreatePrefs():
+    Prefs.Add(id='radio_quality', type='enum', default='h', label=L('RADIO_QUALITY'))
+
 def ValidatePrefs():
-    u = Prefs.Get('username')
-    p = Prefs.Get('password')
-    ## do some checks and return a
-    ## message container
-    if( u and p ):
-        return MessageContainer(
-            "Success",
-            "User and password provided ok"
-        )
-    else:
-        return MessageContainer(
-            "Error",
-            "You need to provide both a user and password"
-        )
-"""
+    return MessageContainer(
+        L('title'),
+        L('settings_saved')
+    )

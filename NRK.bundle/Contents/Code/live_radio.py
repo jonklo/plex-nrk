@@ -5,40 +5,40 @@ from PMS.Shortcuts import *
 
 
 LIVE_RADIO_BASEURL = 'http://media.hiof.no/scripts/make_session.php'
-LIVE_RADIO_QUALITY = 'h' # h (high) or m (medium)
+#LIVE_RADIO_QUALITY = 'h' # h (high) or m (medium)
 
 LIVE_RADIO_STATIONS = (
     # Channel/image filename, name, description
-    ('nrk-p1', 'P1', u'Den brede kanalen for folk flest. Norges største radiokanal. Bredt distriktstilbud.'),
-    ('nrk-p2', 'P2', u'Kulturkanalen med kunst, kultur, nyheter, debatt og samfunnsstoff.'),
-    ('nrk-petre', 'P3', u'Ungdomskanal med mye pop og rock-musikk, humor og skreddersydde nyheter for de unge.'),
-    ('nrk-mpetre', 'mPetre', u'Musikk for de yngre.'),
-    ('nrk-alltid-klassisk', 'Klassisk', u'Klassisk musikk døgnet rundt'),
-    ('nrk-alltid-nyheter', 'Alltid Nyheter', u'Hyppige nyhetsoppdateringer - BBC kveld/natt.'),
+    ('nrk-p1', u'P1', u'Den brede kanalen for folk flest. Norges største radiokanal. Bredt distriktstilbud.'),
+    ('nrk-p2', u'P2', u'Kulturkanalen med kunst, kultur, nyheter, debatt og samfunnsstoff.'),
+    ('nrk-petre', u'P3', u'Ungdomskanal med mye pop og rock-musikk, humor og skreddersydde nyheter for de unge.'),
+    ('nrk-mpetre', u'mPetre', u'Musikk for de yngre.'),
+    ('nrk-alltid-klassisk', u'Klassisk', u'Klassisk musikk døgnet rundt'),
+    ('nrk-alltid-nyheter', u'Alltid Nyheter', u'Hyppige nyhetsoppdateringer - BBC kveld/natt.'),
     ('nrk-sami-radio', u'Sámi Radio', u'Tilbud for samisktalende.'),
-    ('nrk-stortinget', 'Stortinget', u'Fra debattene.'),
-    ('nrk-alltid-folkemusikk', 'Folkemusikk', u'Fra NRKs unike folkemusikkarkiv.'),
-    ('nrk-jazz', 'Jazz', u'Jazz døgnet rundt.'),
-    ('nrk-sport', 'Sport', u'Levende og arkivsport, engelsk fotball.'),
+    ('nrk-stortinget', u'Stortinget', u'Fra debattene.'),
+    ('nrk-alltid-folkemusikk', u'Folkemusikk', u'Fra NRKs unike folkemusikkarkiv.'),
+    ('nrk-jazz', u'Jazz', u'Jazz døgnet rundt.'),
+    ('nrk-sport', u'Sport', u'Levende og arkivsport, engelsk fotball.'),
     ('nrk-urort', u'Urørt', u'Musikk.'),
-    ('nrk-gull', 'Gull', u'Godbiter fra arkivene.'),
-    ('nrk-super', 'Super', u'Barnetilbud.'),
-    ('nrk-p1-ostfold', u'P1 Østfold', ''),
-    ('nrk-p1-buskerud', 'P1 Buskerud', ''),
-    ('nrk-p1-sogn-og-fjordane', 'P1 Sogn og Fjordane', ''),
-    ('nrk-p1-rogaland', 'P1 Rogaland', ''),
-    ('nrk-p1-finnmark', 'P1 Finnmark', ''),
-    ('nrk-p1-hedmark', 'P1 Hedmark', ''),
-    ('nrk-p1-hordaland', 'P1 Hordaland', ''),
-    ('nrk-p1-more-og-romsdal', u'P1 Møre og Romsdal', ''),
-    ('nrk-p1-nordland', 'P1 Nordland', ''),
-    ('nrk-p1-oppland', 'P1 Oppland', ''),
-    ('nrk-p1-oslo', 'P1 Oslo', ''),
-    ('nrk-p1-telemark', 'P1 Telemark', ''),
-    ('nrk-p1-troms', 'P1 Troms', ''),
-    ('nrk-p1-trondelag', u'P1 Trøndelag', ''),
-    ('nrk-p1-vestfold', 'P1 Vestfold', ''),
-    ('nrk-p1-sorlandet', u'P1 Sørlandet', ''),
+    ('nrk-gull', u'Gull', u'Godbiter fra arkivene.'),
+    ('nrk-super', u'Super', u'Barnetilbud.'),
+    ('nrk-p1-ostfold', u'P1 Østfold', u''),
+    ('nrk-p1-buskerud', u'P1 Buskerud', u''),
+    ('nrk-p1-sogn-og-fjordane', u'P1 Sogn og Fjordane', u''),
+    ('nrk-p1-rogaland', u'P1 Rogaland', u''),
+    ('nrk-p1-finnmark', u'P1 Finnmark', u''),
+    ('nrk-p1-hedmark', u'P1 Hedmark', u''),
+    ('nrk-p1-hordaland', u'P1 Hordaland', u''),
+    ('nrk-p1-more-og-romsdal', u'P1 Møre og Romsdal', u''),
+    ('nrk-p1-nordland', u'P1 Nordland', u''),
+    ('nrk-p1-oppland', u'P1 Oppland', u''),
+    ('nrk-p1-oslo', u'P1 Oslo', u''),
+    ('nrk-p1-telemark', u'P1 Telemark', u''),
+    ('nrk-p1-troms', u'P1 Troms', u''),
+    ('nrk-p1-trondelag', u'P1 Trøndelag', u''),
+    ('nrk-p1-vestfold', u'P1 Vestfold', u''),
+    ('nrk-p1-sorlandet', u'P1 Sørlandet', u''),
 )
 
 
@@ -51,13 +51,16 @@ def LiveRadioMenu(sender):
     # Adds all the station as track items
     for station in LIVE_RADIO_STATIONS:
         url = '%s?channel=%s&quality=%s&format=ogg&protocol=ipv4' % \
-            (LIVE_RADIO_BASEURL, station[0], LIVE_RADIO_QUALITY)
+            (LIVE_RADIO_BASEURL, station[0], Prefs.Get("radio_quality"))
+            
+        Log('Added stream: %s' % url)
         
+        # Thumb file
         if station[0].startswith('nrk-p1'):
-            res_art = R('nrk-p1.png')
+            thumb_file = 'nrk-p1.png'
         else:
-            res_art = R(station[0] + '.png')
+            thumb_file = station[0] + '.png'
         
-        dir.Append(TrackItem(url, station[1], summary=station[2], thumb=res_art))
+        dir.Append(TrackItem(url, station[1], summary=station[2], thumb=R(thumb_file)))
     
     return dir

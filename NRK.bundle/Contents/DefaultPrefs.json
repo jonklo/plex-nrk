@@ -1,0 +1,9 @@
+[
+{
+    "id": "radio_quality",
+    "label": "RADIO_QUALITY",
+    "type": "enum",
+    "values": ["h", "m"],
+    "default": "h",
+}
+]
