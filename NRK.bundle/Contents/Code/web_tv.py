@@ -150,7 +150,7 @@ def WebTVMostViewedMenu(sender, days=7):
         desc = fix_chars(program_element.xpath('./p/a')[0].text)
         
         # Append the item to the list
-        dir.Append(Function(WindowsMediaVideoItem(_get_wmv_link(html_link), title=title, summary=desc, thumb=img, width=768, height=432)))
+        dir.Append(WindowsMediaVideoItem(_get_wmv_link(html_link), title=title, summary=desc, thumb=img, width=768, height=432))
     
     return dir
 
