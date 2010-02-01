@@ -1,0 +1,8 @@
+Plex plugin for NRK
+
+Author: Jon Lønne <jonklo at gmail dot com>
+
+Known issues:
+* It takes way to long to navigate the menues, mainly because of resolving 
+  the video stream links.
+
