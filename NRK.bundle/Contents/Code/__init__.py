@@ -37,8 +37,7 @@ def MainMenu():
     Sets up the main menu. All the menu functions are in separate files.
     """
     dir = MediaContainer(viewGroup="Details")
-    Log(Locale.Geolocation())
-    Locale.SetDefaultLocale(loc =Locale.Geolocation().lower())
+    
     dir.Append(Function(DirectoryItem(
                             WebTVMenu, 
                             title=L('webtv_title'), 
