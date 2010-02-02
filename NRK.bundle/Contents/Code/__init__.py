@@ -10,7 +10,6 @@ from web_tv import *
 
 NRK_PREFIX = '/video/nrk'
 
-NAME = L('Title')
 ART = 'art-default.png'
 ICON = 'icon-default.png'
 
@@ -27,7 +26,7 @@ def Start():
     
     # Set defaults
     MediaContainer.art = R(ART)
-    MediaContainer.title1 = NAME
+    MediaContainer.title1 = L('title')
     DirectoryItem.thumb = R(ICON)
 
 
