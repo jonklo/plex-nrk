@@ -5,6 +5,7 @@ from PMS.Shortcuts import *
 
 from util import fix_chars
 
+BASE_URL_WEBTV = 'http://www1.nrk.no/nett-tv'
 CACHE_HTML_INTERVAL = 3600 * 5
 
 
@@ -46,15 +47,14 @@ def WebTVProgramMenu(sender, projectId=None, categoryId=None, programImage=None)
     
     # Fetch most viewed HTML (from NRK's Ajax response)
     if projectId:
-        url = 'http://nrk.no/nett-tv/dynamisklaster.aspx?projectList$project:%s' % projectId
+        url = '%s/dynamisklaster.aspx?projectList$project:%s' % (BASE_URL_WEBTV, projectId)
         page = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL, encoding='utf-8')
         elements = page.xpath('//div[@class="nettv-list"]/ul')[0]
         
     elif categoryId:
-        url = 'http://nrk.no/nett-tv/menyfragment.aspx?type=category&id=%s' % categoryId
+        url = '%s/menyfragment.aspx?type=category&id=%s' % (BASE_URL_WEBTV, categoryId)
         page = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL, encoding='utf-8')
-        elements = page#.xpath('//div[@class="nettv-list"]/ul')[0]
-    
+        elements = page
     
     for element in elements:
         
@@ -130,7 +130,7 @@ def WebTVMostViewedMenu(sender, days=7):
     dir = MediaContainer(viewGroup='Details', title2=sender.itemTitle)
     
     # Fetch most viewed HTML (from NRK's Ajax response)
-    url = 'http://www1.nrk.no/nett-tv/ml/topp12.aspx?dager=%s' % days
+    url = '%s/ml/topp12.aspx?dager=%s' % (BASE_URL_WEBTV, days)
     
     page = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL, encoding='utf-8')
     program_elements = page.xpath('//div[@class="views-element"]')
@@ -199,9 +199,9 @@ def WebTVContentMenu(sender, genre_id=None, letter=None):
     
     # Fetch most viewed HTML (from NRK's Ajax response)
     if genre_id:
-        url = 'http://www1.nrk.no/nett-tv/DynamiskLaster.aspx?LiveContent$theme:%s' % genre_id
+        url = '%s/DynamiskLaster.aspx?LiveContent$theme:%s' % (BASE_URL_WEBTV, genre_id)
     elif letter:
-        url = 'http://www1.nrk.no/nett-tv/DynamiskLaster.aspx?LiveContent$letter:%s' % letter
+        url = '%s/DynamiskLaster.aspx?LiveContent$letter:%s' % (BASE_URL_WEBTV, letter)
     
     page = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL, encoding='utf-8')
     elements = page.xpath('//div[@class="intro-element intro-element-small"]')

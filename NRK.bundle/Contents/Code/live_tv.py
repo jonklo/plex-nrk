@@ -44,7 +44,6 @@ def LiveTVMenu(sender):
     dir = MediaContainer(viewGroup='Details', title2=sender.itemTitle)
     
     for station in LIVE_TV_STATIONS:
-        Log(station['img'])
         dir.Append(TrackItem(station['url'], station['title'], summary=station['desc'], thumb=R(station['img'])))
     
     return dir
