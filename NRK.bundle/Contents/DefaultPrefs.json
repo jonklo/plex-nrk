@@ -1,9 +1,16 @@
 [
-{
-    "id": "radio_quality",
-    "label": "RADIO_QUALITY",
-    "type": "enum",
-    "values": ["h", "m"],
-    "default": "h",
-}
+    {
+        "id": "livetv_quality",
+        "label": "LIVETV_QUALITY",
+        "type": "enum",
+        "values": ["h", "m", "l"],
+        "default": "h",
+    },
+    {
+        "id": "radio_quality",
+        "label": "RADIO_QUALITY",
+        "type": "enum",
+        "values": ["h", "m"],
+        "default": "h",
+    }
 ]

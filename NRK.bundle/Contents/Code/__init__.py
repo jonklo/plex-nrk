@@ -71,6 +71,7 @@ def MainMenu():
 
 
 def CreatePrefs():
+    Prefs.Add(id='livetv_quality', type='enum', default='h', label=L('LIVETV_QUALITY'))
     Prefs.Add(id='radio_quality', type='enum', default='h', label=L('RADIO_QUALITY'))
 
 def ValidatePrefs():
