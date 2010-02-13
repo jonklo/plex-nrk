@@ -9,23 +9,19 @@ from PMS.Shortcuts import *
 LIVE_TV_STATIONS = (
     {
         'title': 'NRK 1', 
-        'url': 'mms://straumV.nrk.no/nrk_tv_webvid03_%s',
-        #'url': 'mms://mms-icanal-live.online.no/nrk_tv_direkte_nrk1_%s',
-        
+        'url': 'mms://straumV.nrk.no/nrk_tv_webvid08_%s',
         'desc': u'Bredt og variert programtilbud. Norges største tv-kanal.', 
         'img': 'nrk1.png',
     },
     {
         'title': 'NRK 2', 
-        'url': 'mms://straumV.nrk.no/nrk_tv_webvid04_%s',
-        #'url': 'mms://mms-icanal-live.online.no/nrk_tv_direkte_nrk2_%s',
+        'url': 'mms://straumV.nrk.no/nrk_tv_webvid03_%s',
         'desc': u'Fordypningskanalen. Bakgrunns-, dokumentar og nyhetskanal.', 
         'img': 'nrk2.png',
     }, 
     {
         'title': 'NRK Super / NRK 3', 
-        'url': 'mms://straumV.nrk.no/nrk_tv_webvid05_%s',
-        #'url': 'mms://mms-icanal-live.online.no/nrk_tv_direkte_nrk3_%s',
+        'url': 'mms://straumV.nrk.no/nrk_tv_webvid04_%s',
         'desc': u'Den tredje kanalen tilbyr vekselsvis et barnetilbud og et tilbud for unge voksne med serier, humor film.', 
         'img': 'nrk3.png',
     },
