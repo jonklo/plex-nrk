@@ -249,15 +249,28 @@ def WebTVByLetterMenu(sender, query):
 
 def _get_wmv_link(clip_url):
     """
-    Fetches the Windows Meda Video link from nonline.org. Thanks dude!
+    Fetches the Windows Meda Video link from external source. Thanks dude!
     
     Source:
-    http://nonline.org/nrk/beta/
+    http://nrkbrowser.appspot.com/
     """
-    url = 'http://nonline.org/nrk/beta/%s' % clip_url
+    clip_id = clip_url.split('/')[-1]
+    
+    # TODO If we use the asx URL, we get the correct start time
+    #url = 'http://nrkbrowser.appspot.com/asx/clip/video/%s' % clip_id
+    #return 'http://nrkbrowser.appspot.com/asx/clip/video/%s' % clip_id
+    
+    url = 'http://nrkbrowser.appspot.com/html/clip/video/%s' % clip_id
+    Log(url)
+    
+    
     page = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL)
     
-    elem_a = page.xpath('//p/a')
+    if not page:
+        Log('Error fetching URL from %s' % url)
+        return None
+    
+    elem_a = page.xpath('//ul/li/a')
     mms_link = None
     
     if len(elem_a) > 0:
