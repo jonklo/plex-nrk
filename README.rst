@@ -4,7 +4,7 @@
 
 A Plex plugin for Norwegian Broadcasting Corporation (NRK). 
 
-Author: Jon Lønne <jonklo æt gmail dåt com>
+Author: Jon Lonne <jonklo at gmail dot com>
 
 Provides an easy to use interface for NRK's content. Currently includes 
 live tv, web tv, live radio and audio/video podcasts.
