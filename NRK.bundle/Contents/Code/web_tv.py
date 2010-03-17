@@ -53,30 +53,38 @@ def WebTVProgramMenu(sender, projectId=None, categoryId=None, programImage=None)
         
     elif categoryId:
         url = '%s/menyfragment.aspx?type=category&id=%s' % (BASE_URL_WEBTV, categoryId)
-        page = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL, encoding='utf-8')
-        elements = page
+        elements = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL, encoding='utf-8')
     
     for element in elements:
         
-        elem_a = element.xpath('./a')[0]
+        try:
+            elem_a = element.xpath('./a')[0]
+        except IndexError:
+            elem_a = element
+            if not elem_a.get('href'):
+                break
         
         # Link is a clip
         if elem_a.get('href').find('klipp') != -1:
             
             # Title
-            title = fix_chars(elem_a.get('title'))
+            raw_title = fix_chars(elem_a.get('title'))
+            Log('Raw title: %s' % raw_title)
             
             # Split title and add as a description
+            title = raw_title
             desc = None
-            if title.find(' - ') != -1:
-                title, desc = title.split(' - ')[:2]
-                
-        
+            
+            if raw_title.find(' - ') != -1:
+                split_title = raw_title.split(' - ')
+                title = split_title[0]
+                desc = ' - '.join(split_title[1:])
+            
             # Link and MMS URL
             html_link = elem_a.get('href')
             clip_mms_url = _get_wmv_link(html_link)
             
-            # TODO Does not support URL's with unicode characters
+            # TODO Does not support URLs with unicode characters
             try:
                 dir.Append(WindowsMediaVideoItem(clip_mms_url, title=title, summary=desc, thumb=programImage, width=768, height=432))
             except:
@@ -85,26 +93,26 @@ def WebTVProgramMenu(sender, projectId=None, categoryId=None, programImage=None)
         
         # Link is a category
         elif elem_a.get('href').find('kategori') != -1:
+            
             # Title
-            title = fix_chars(elem_a.get('title'))
+            raw_title = fix_chars(elem_a.get('title'))
+            Log('Raw category title: %s' % raw_title)
             
             # Split title and add as a description
+            title = raw_title
             desc = None
-            if title.find(' - ') != -1:
-                title, desc = title.split(' - ')[:2]
+            
+            if raw_title.find(' - ') != -1:
+                split_title = raw_title.split(' - ')
+                title = split_title[0]
+                desc = ' - '.join(split_title[1:])
             
             title = '[%s]' % title
-            Log(title)
-            
             category_id = elem_a.get('href').split('/')[-1]
             
-            # TODO Does not support URL's with unicode characters
-            try:
-                dir.Append(Function(DirectoryItem(WebTVProgramMenu, title=title, summary=desc, thumb=programImage), categoryId=category_id, programImage=programImage))
-            except:
-                Log('Could not add %s to menu, illegal characters in URL' % title)
+            Log('Added category: %s' % title)
             
-        
+            dir.Append(Function(DirectoryItem(WebTVProgramMenu, title=title, summary=desc, thumb=programImage), categoryId=category_id, programImage=programImage))
     
     return dir
 
@@ -131,6 +139,7 @@ def WebTVMostViewedMenu(sender, days=7):
     
     # Fetch most viewed HTML (from NRK's Ajax response)
     url = '%s/ml/topp12.aspx?dager=%s' % (BASE_URL_WEBTV, days)
+    Log('Fetching %s' % url)
     
     page = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL, encoding='utf-8')
     program_elements = page.xpath('//div[@class="views-element"]')
@@ -160,22 +169,22 @@ def WebTVMostViewedMenu(sender, days=7):
 
 WEB_TV_GENRES = (
     # Title, ID
-    ('Barn', '2'),
-    ('Distrikt', '13'),
-    ('Dokumentar', '20'),
-    ('Drama', '3'),
-    ('Fakta', '4'),
-    ('Kultur', '5'),
-    ('Livssyn', '9'),
-    ('Mat', '17'),
-    ('Musikk', '6'),
-    ('Natur', '7'),
-    ('Nyheter', '8'),
+    (u'Barn', '2'),
+    (u'Distrikt', '13'),
+    (u'Dokumentar', '20'),
+    (u'Drama', '3'),
+    (u'Fakta', '4'),
+    (u'Kultur', '5'),
+    (u'Livssyn', '9'),
+    (u'Mat', '17'),
+    (u'Musikk', '6'),
+    (u'Natur', '7'),
+    (u'Nyheter', '8'),
     (u'På samisk', '19'),
     (u'På tegnspråk', '22'),
-    ('Sport', '10'),
-    ('Underholdning', '11'),
-    ('Ung', '21'),
+    (u'Sport', '10'),
+    (u'Underholdning', '11'),
+    (u'Ung', '21'),
 )
 
 def WebTVGenreMainMenu(sender):
@@ -237,8 +246,10 @@ def WebTVContentMenu(sender, genre_id=None, letter=None):
 #############
 
 def WebTVByLetterMenu(sender, query):
-    if len(query) != 1:
-        return (MessageContainer(header=sender.itemTitle, message=L('by_letter_length'), title1=L('title')))
+    
+    # If the string is longer than one character, just pass along the first one
+    if len(query) > 1:
+        query = query[0]
     
     return WebTVContentMenu(sender, letter=query)
 
@@ -261,8 +272,6 @@ def _get_wmv_link(clip_url):
     #return 'http://nrkbrowser.appspot.com/asx/clip/video/%s' % clip_id
     
     url = 'http://nrkbrowser.appspot.com/html/clip/video/%s' % clip_id
-    Log(url)
-    
     
     page = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL)
     

@@ -70,15 +70,15 @@ def PodcastShowMenu(sender, podcastName=None, podcastUrl=None, podcastSubtitle=N
     
     rss = XML.ElementFromURL(podcastUrl, isHTML=False, cacheTime=CACHE_RSS_FEED_INTERVAL)
     
-    episodes = rss.xpath("//channel/item")
+    episodes = rss.xpath('//channel/item')
     
     if len(episodes):
         
         for episode in episodes:
-            episodeUrl = episode.xpath("./enclosure")[0].get('url')
-            episodeTitle = episode.xpath("./title/text()")[0]
-            episodeDate = str(episode.xpath("./pubDate/text()")[0])
-            episodeDescription = episode.xpath("./description/text()")[0]
+            episodeUrl = episode.xpath('./enclosure')[0].get('url')
+            episodeTitle = episode.xpath('./title/text()')[0]
+            episodeDate = str(episode.xpath('./pubDate/text()')[0])
+            episodeDescription = episode.xpath('./description/text()')[0]
             episodeSubtitle = episodeDate
 
             episodeLength = 0
@@ -86,6 +86,7 @@ def PodcastShowMenu(sender, podcastName=None, podcastUrl=None, podcastSubtitle=N
             dir.Append(TrackItem(episodeUrl, episodeTitle, album=L('title'), summary=episodeDescription, subtitle=episodeSubtitle, duration=episodeLength, thumb=podcastImage))
     
     else:
+        # Display error message
         return (MessageContainer(header=L('title'), message=L('podcast_noepisodes'), title1=L('title')))
     
     return dir

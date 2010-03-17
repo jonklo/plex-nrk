@@ -35,8 +35,6 @@ LIVE_TV_STATIONS = (
 )
 
 
-
-
 def LiveTVMenu(sender):
     """
     Show the live TV menu.
@@ -47,6 +45,6 @@ def LiveTVMenu(sender):
         url = station['url'] % Prefs.Get('livetv_quality')
         Log('Added %s' % url)
         
-        dir.Append(WindowsMediaVideoItem(url, title=station['title'], summary=station['desc'], thumb=R(station['img'])))
+        dir.Append(WindowsMediaVideoItem(url, title=station['title'], summary=station['desc'], thumb=R(station['img']), width=768, height=432))
     
     return dir
