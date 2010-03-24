@@ -149,7 +149,7 @@ def WebTVMostViewedMenu(sender, days=7):
     
     # Display error message if there's no content
     if not program_elements:
-        return (MessageContainer(header=L('title'), message=L('webtv_error'), title1=L('title')))
+        return (MessageContainer(header=L('title'), message=L('webtv_error_nocontent'), title1=L('title')))
     
     for program_element in program_elements:
         
@@ -216,13 +216,17 @@ def WebTVContentMenu(sender, genre_id=None, letter=None):
         url = '%s/DynamiskLaster.aspx?LiveContent$letter:%s' % (BASE_URL_WEBTV, letter)
     
     page = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL, encoding='utf-8')
-    elements = page.xpath('//div[@class="intro-element intro-element-small"]')
+    elements = page.xpath('//ul/li/div')
+    
+    # Display error message if there's no content
+    if not elements:
+        return (MessageContainer(header=L('title'), message=L('webtv_error_nocontent'), title1=L('title')))
     
     for element in elements:
         
         # Title
-        title = fix_chars(element.xpath('./div/a')[0].get('title'))
-        project_id = element.xpath('./div/a')[0].get('href').split('/')[-1]
+        title = fix_chars(element.xpath('./a')[0].get('title'))
+        project_id = element.xpath('./a')[0].get('href').split('/')[-1]
         Log(title + ' ' + project_id)
         
         # Split title and add as a description
@@ -230,11 +234,11 @@ def WebTVContentMenu(sender, genre_id=None, letter=None):
             title, desc = title.split(' - ')[:2]
         
         # Image
-        img = element.xpath('./div/a/img')[0].get('src')
+        img = element.xpath('./a/img')[0].get('src')
         
         # Description
         try:
-            desc = fix_chars(element.xpath('./p/a')[0].text)
+            desc = fix_chars(element.xpath('./div/p/a')[0].text)
         except AttributeError:
             desc = None
         
