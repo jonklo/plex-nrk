@@ -8,6 +8,7 @@
     
     "webtv_title": "Nett-TV",
     "webtv_description": "NRKs arkiv over tidligere sendte programmer.",
+    "webtv_error": "Fant ingen videoer. Hvis problemet vedvarer, sjekk for oppdatering av pluginen.",
     
     "liveradio_title": "Direkte radio",
     "liveradio_description": "Direkte strømmer fra alle NRKs radiokanaler.",

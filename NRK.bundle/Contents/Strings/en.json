@@ -2,18 +2,19 @@
     "title": "NRK",
     "not_implemented": "All funksjonalitet er dessverre ikke på plass enda...",
     "settings_saved": "Settings has been saved.",
-    
-    "livetv_title": "Live TV",
+
+    "livetv_title": "Direkte TV",
     "livetv_description": "Direkte strømmer fra NRKs TV-kanaler. NB. viser kun programmer de har rettigheter til.",
     
-    "webtv_title": "Web TV",
+    "webtv_title": "Nett-TV",
     "webtv_description": "NRKs arkiv over tidligere sendte programmer.",
+    "webtv_error": "Fant ingen videoer. Hvis problemet vedvarer, sjekk for oppdatering av pluginen.",
     
-    "liveradio_title": "Live radio",
+    "liveradio_title": "Direkte radio",
     "liveradio_description": "Direkte strømmer fra alle NRKs radiokanaler.",
-    "RADIO_QUALITY": "Radio quality",
+    "RADIO_QUALITY": "Kvalitet på direkte radio",
     
-    "podcast_description": "Video and audio podcasts", 
+    "podcast_description": "Video- og lydpodkaster.", 
     "podcast_video_title": "Videopodkaster",
     "podcast_video_description": "Se på videopodkaster fra NRK.",
     "podcast_audio_title": "Lydpodkaster",
