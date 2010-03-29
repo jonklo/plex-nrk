@@ -54,7 +54,8 @@ def WebTVProgramMenu(sender, projectId=None, categoryId=None, programImage=None)
         
     elif categoryId:
         url = '%s/menyfragment.aspx?type=category&id=%s' % (BASE_URL_WEBTV, categoryId)
-        elements = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL, encoding='utf-8')
+        Log('Fetching %s' % url)
+        elements = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL)
     
     for element in elements:
         
