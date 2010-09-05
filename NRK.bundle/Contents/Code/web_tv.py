@@ -55,7 +55,11 @@ def WebTVProgramMenu(sender, projectId=None, categoryId=None, programImage=None)
     elif categoryId:
         url = '%s/menyfragment.aspx?type=category&id=%s' % (BASE_URL_WEBTV, categoryId)
         Log('Fetching %s' % url)
-        elements = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL)
+        elements = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL) # , encoding='utf-8'
+    
+    # Display error message if there's no content
+    if not elements:
+        return (MessageContainer(header=L('title'), message=L('webtv_error_nocontent'), title1=L('title')))
     
     for element in elements:
         
@@ -268,18 +272,11 @@ def WebTVByLetterMenu(sender, query):
 
 def _get_wmv_link(clip_url):
     """
-    Fetches the Windows Meda Video link from external source. Thanks dude!
-    
-    Source:
-    http://nrkbrowser.appspot.com/
+    Fetches the Windows Meda Video link.
     """
     clip_id = clip_url.split('/')[-1]
     
-    # TODO If we use the asx URL, we get the correct start time
-    #url = 'http://nrkbrowser.appspot.com/asx/clip/video/%s' % clip_id
-    #return 'http://nrkbrowser.appspot.com/asx/clip/video/%s' % clip_id
-    
-    url = 'http://nrkbrowser.appspot.com/html/clip/video/%s' % clip_id
+    url = '%s/silverlight/getmediaxml.ashx?id=%s&hastighet=2000&vissuper=True' % (BASE_URL_WEBTV, clip_id)
     
     page = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL)
     
@@ -287,12 +284,9 @@ def _get_wmv_link(clip_url):
         Log('Error fetching URL from %s' % url)
         return None
     
-    elem_a = page.xpath('//ul/li/a')
-    mms_link = None
+    # Find the video URL
+    mms_link = page.xpath('//mediadefinition/mediaitems/mediaitem/mediaurl')[0].text
     
-    if len(elem_a) > 0:
-        mms_link = elem_a[0].get('href')
-        
     Log('%s -> %s' % (clip_url, mms_link))
     return mms_link
-    
+
