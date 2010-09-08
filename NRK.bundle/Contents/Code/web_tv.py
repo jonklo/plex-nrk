@@ -145,7 +145,7 @@ def WebTVMostViewedMenu(sender, days=7):
     """
     dir = MediaContainer(viewGroup='Details', title2=sender.itemTitle)
     
-    # Fetch most viewed HTML (from a custom Yahoo Pipe)
+    # Fetch most viewed clips (from a custom Yahoo Pipe)
     url = 'http://pipes.yahoo.com/pipes/pipe.run?_id=aefa462421686c218bfa1f48df4b41b5&_render=rss&days=%s' % days
     Log('Fetching %s' % url)
     
