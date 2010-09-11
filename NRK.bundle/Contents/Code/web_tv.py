@@ -5,7 +5,7 @@ from PMS.Shortcuts import *
 
 from util import fix_chars
 
-BASE_URL_WEBTV = 'http://www1.nrk.no/nett-tv'
+BASE_URL_WEBTV = 'http://www.nrk.no/nett-tv'
 CACHE_HTML_INTERVAL = 3600 * 5
 RSS_MEDIA_NAMESPACE = {'media': 'http://search.yahoo.com/mrss/'}
 
@@ -140,34 +140,33 @@ def WebTVMostViewedTotalMenu(sender):
 def WebTVMostViewedMenu(sender, days=7):
     """
     Show a most viewed web tv menu.
-    
-    Source: http://pipes.yahoo.com/jonklo/nrkmostviewed
     """
     dir = MediaContainer(viewGroup='Details', title2=sender.itemTitle)
     
-    # Fetch most viewed clips (from a custom Yahoo Pipe)
-    url = 'http://pipes.yahoo.com/pipes/pipe.run?_id=aefa462421686c218bfa1f48df4b41b5&_render=rss&days=%s' % days
+    # Fetch most viewed clips
+    url = '%s/ml/topp12.aspx?dager=%s' % (BASE_URL_WEBTV, days)
     Log('Fetching %s' % url)
     
-    rss = XML.ElementFromURL(url, isHTML=False, cacheTime=CACHE_HTML_INTERVAL, encoding='utf-8')
-    program_elements = rss.xpath('//channel/item')
+    page = XML.ElementFromURL(url, isHTML=True, cacheTime=0 , encoding='utf-8')
+    program_elements = page.xpath('//ul')[0]
     
     # Display error message if there's no content
     if not program_elements:
         return (MessageContainer(header=L('title'), message=L('webtv_error_nocontent'), title1=L('title')))
     
     for program_element in program_elements:
-        
+        Log(program_element)
         # Program title and description
-        title = program_element.xpath('./title/text()')[0]
-        desc = program_element.xpath('./description/text()')[0]
+        
+        img = program_element.xpath('./div/a/img')[0].get('src')
+        title = fix_chars(program_element.xpath('./div/h3/a')[0].text)
         
         # Program image and clip URL
-        img = program_element.xpath('./media:thumbnail', namespaces=RSS_MEDIA_NAMESPACE)[0].get('url')
-        clip_url = program_element.xpath('./media:content', namespaces=RSS_MEDIA_NAMESPACE)[0].get('url')
+        html_link = program_element.xpath('./div/a')[0].get('href')
+        desc = fix_chars(program_element.xpath('./div/div[@class="summary"]/p')[0].text)
         
         # Append the item to the list
-        dir.Append(WindowsMediaVideoItem(clip_url, title=title, summary=desc, thumb=img, width=768, height=432))
+        dir.Append(WindowsMediaVideoItem(_get_wmv_link(html_link), title=title, summary=desc, thumb=img, width=768, height=432))
     
     return dir
 
@@ -285,7 +284,10 @@ def _get_wmv_link(clip_url):
         return None
     
     # Find the video URL
-    mms_link = page.xpath('//mediadefinition/mediaitems/mediaitem/mediaurl')[0].text
+    try:
+        mms_link = page.xpath('//mediadefinition/mediaitems/mediaitem/mediaurl')[0].text
+    except:
+        mms_link = None
     
     Log('%s -> %s' % (clip_url, mms_link))
     return mms_link
