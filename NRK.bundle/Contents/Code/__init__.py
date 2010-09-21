@@ -10,7 +10,7 @@ from web_tv import *
 
 NRK_PREFIX = '/video/nrk'
 
-ART = 'art-default.png'
+ART = 'art-default.jpg'
 ICON = 'icon-default.png'
 
 
