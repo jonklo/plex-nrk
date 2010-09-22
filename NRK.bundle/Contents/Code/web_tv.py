@@ -46,9 +46,9 @@ def WebTVProgramMenu(sender, projectId=None, categoryId=None, programImage=None)
     """
     dir = MediaContainer(viewGroup='Details', title2=sender.itemTitle)
     
-    # Fetch most viewed HTML (from NRK's Ajax response)
+    # Fetch program content 
     if projectId:
-        url = '%s/dynamisklaster.aspx?projectList$project:%s' % (BASE_URL_WEBTV, projectId)
+        url = '%s/prosjekt/%s/' % (BASE_URL_WEBTV, projectId)
         page = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL, encoding='utf-8')
         elements = page.xpath('//div[@class="nettv-list"]/ul')[0]
         
@@ -74,8 +74,8 @@ def WebTVProgramMenu(sender, projectId=None, categoryId=None, programImage=None)
         if elem_a.get('href').find('klipp') != -1:
             
             # Title
-            raw_title = fix_chars(elem_a.get('title'))
-            Log('Raw title: %s' % raw_title)
+            raw_title = elem_a.get('title')
+            Log('Raw clip title: %s' % raw_title)
             
             # Split title and add as a description
             title = raw_title
@@ -101,7 +101,7 @@ def WebTVProgramMenu(sender, projectId=None, categoryId=None, programImage=None)
         elif elem_a.get('href').find('kategori') != -1:
             
             # Title
-            raw_title = fix_chars(elem_a.get('title'))
+            raw_title = elem_a.get('title')
             Log('Raw category title: %s' % raw_title)
             
             # Split title and add as a description
@@ -215,12 +215,12 @@ def WebTVContentMenu(sender, genre_id=None, letter=None):
     
     # Fetch most viewed HTML (from NRK's Ajax response)
     if genre_id:
-        url = '%s/DynamiskLaster.aspx?LiveContent$theme:%s' % (BASE_URL_WEBTV, genre_id)
+        url = '%s/tema/%s/' % (BASE_URL_WEBTV, genre_id)
     elif letter:
-        url = '%s/DynamiskLaster.aspx?LiveContent$letter:%s' % (BASE_URL_WEBTV, letter)
+        url = '%s/bokstav/%s/' % (BASE_URL_WEBTV, letter)
     
     page = XML.ElementFromURL(url, isHTML=True, cacheTime=CACHE_HTML_INTERVAL, encoding='utf-8')
-    elements = page.xpath('//ul/li/div')
+    elements = page.xpath('//div[contains(@class,"nettv-category")]/ul')[0]
     
     # Display error message if there's no content
     if not elements:
@@ -229,23 +229,19 @@ def WebTVContentMenu(sender, genre_id=None, letter=None):
     for element in elements:
         
         # Title
-        title = fix_chars(element.xpath('./a')[0].get('title'))
-        project_id = element.xpath('./a')[0].get('href').split('/')[-1]
+        title = element.xpath('./div/h3/a')[0].text
+        project_id = element.xpath('./div/a')[0].get('href').split('/')[-1]
         Log(title + ' ' + project_id)
         
-        # Split title and add as a description
+        # Split title and add as a backup description
         if title.find(' - ') != -1:
             title, desc = title.split(' - ')[:2]
         
         # Image
-        img = element.xpath('./a/img')[0].get('src')
+        img = element.xpath('./div/a/img')[0].get('src')
         
         # Description
-        try:
-            desc = fix_chars(element.xpath('./div/p/a')[0].text)
-        except AttributeError:
-            desc = None
-        
+        desc = element.xpath('./div/div/p')[0].text
         
         dir.Append(Function(DirectoryItem(WebTVProgramMenu, title=title, summary=desc, thumb=img), projectId=project_id, programImage=img))
     
