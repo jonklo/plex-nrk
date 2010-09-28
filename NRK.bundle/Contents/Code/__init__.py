@@ -53,7 +53,7 @@ def MainMenu():
                             LiveRadioMenu, 
                             title=L('liveradio_title'), 
                             summary=L('liveradio_description'), 
-                            thumb=R('liveradio.png'))))
+                            thumb=R('nrk-nettradio.png'))))
     
     dir.Append(Function(DirectoryItem(
                             PodcastVideoMenu, 
