@@ -74,7 +74,7 @@ def WebTVProgramMenu(sender, projectId=None, categoryId=None, programImage=None)
         if elem_a.get('href').find('klipp') != -1:
             
             # Title
-            raw_title = elem_a.get('title')
+            raw_title = fix_chars(elem_a.get('title'))
             Log('Raw clip title: %s' % raw_title)
             
             # Split title and add as a description
@@ -101,7 +101,7 @@ def WebTVProgramMenu(sender, projectId=None, categoryId=None, programImage=None)
         elif elem_a.get('href').find('kategori') != -1:
             
             # Title
-            raw_title = elem_a.get('title')
+            raw_title = fix_chars(elem_a.get('title'))
             Log('Raw category title: %s' % raw_title)
             
             # Split title and add as a description
@@ -113,7 +113,6 @@ def WebTVProgramMenu(sender, projectId=None, categoryId=None, programImage=None)
                 title = split_title[0]
                 desc = ' - '.join(split_title[1:])
             
-            title = '[%s]' % title
             category_id = elem_a.get('href').split('/')[-1]
             
             Log('Added category: %s' % title)

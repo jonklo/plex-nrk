@@ -65,4 +65,4 @@ def fix_chars(s):
         s = u'[Ukjent tittel]'
     s = s.strip()
     
-    return s.decode('utf-8')
+    return s.decode('utf-8', 'replace')
