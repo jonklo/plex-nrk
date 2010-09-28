@@ -61,6 +61,6 @@ def LiveRadioMenu(sender):
         else:
             thumb_file = station[0] + '.png'
         
-        dir.Append(TrackItem(url, station[1], summary=station[2], thumb=R(thumb_file)))
+        dir.Append(TrackItem(url, station[1], summary=station[2], thumb=R('nrk-nettradio.png'))) # TODO R(thumb_file)
     
     return dir

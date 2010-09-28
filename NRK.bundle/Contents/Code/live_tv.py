@@ -23,12 +23,6 @@ LIVE_TV_STATIONS = (
         'desc': u'Den tredje kanalen tilbyr vekselsvis et barnetilbud og et tilbud for unge voksne med serier, humor film.', 
         'img': 'nrk3.png',
     },
-    {
-        'title': 'NRK Storting', 
-        'url': 'mms://mms-icanal-live.online.no/nrk_tv_webvid05_%s',
-        'desc': u'Fra debattene.', 
-        'img': 'nrk-stortinget.png',
-    },
     
 )
 
@@ -43,6 +37,6 @@ def LiveTVMenu(sender):
         url = station['url'] % Prefs.Get('livetv_quality')
         Log('Added %s' % url)
         
-        dir.Append(WindowsMediaVideoItem(url, title=station['title'], summary=station['desc'], thumb=R(station['img']), width=768, height=432))
+        dir.Append(WindowsMediaVideoItem(url, title=station['title'], summary=station['desc'], thumb=R('nrk-nett-tv.png'), width=768, height=432)) # TODO thumb=R(station['img'])
     
     return dir
