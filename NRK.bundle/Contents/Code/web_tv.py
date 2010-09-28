@@ -201,7 +201,7 @@ def WebTVGenreMainMenu(sender):
     
     for genre in WEB_TV_GENRES:
         Log(genre[0])
-        dir.Append(Function(DirectoryItem(WebTVContentMenu, title=genre[0]), genre_id=genre[1]))
+        dir.Append(Function(DirectoryItem(WebTVContentMenu, title=genre[0], thumb=R('nrk-nett-tv.png')), genre_id=genre[1]))
     
     return dir
     
