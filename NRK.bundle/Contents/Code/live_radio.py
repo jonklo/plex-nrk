@@ -4,41 +4,39 @@ from PMS.Objects import *
 from PMS.Shortcuts import *
 
 
-LIVE_RADIO_BASEURL = 'http://media.hiof.no/scripts/make_session.php'
-#LIVE_RADIO_QUALITY = 'h' # h (high) or m (medium)
+LIVE_RADIO_BASEURL = 'http://lyd.nrk.no/nrk_radio_'
+LIVE_RADIO_QUALITY = 'h' # h (high) or m (medium)
 
 LIVE_RADIO_STATIONS = (
     # Channel/image filename, name, description
-    ('nrk-p1', u'P1', u'Den brede kanalen for folk flest. Norges største radiokanal. Bredt distriktstilbud.'),
-    ('nrk-p2', u'P2', u'Kulturkanalen med kunst, kultur, nyheter, debatt og samfunnsstoff.'),
-    ('nrk-petre', u'P3', u'Ungdomskanal med mye pop og rock-musikk, humor og skreddersydde nyheter for de unge.'),
-    ('nrk-mpetre', u'mPetre', u'Musikk for de yngre.'),
-    ('nrk-alltid-klassisk', u'Klassisk', u'Klassisk musikk døgnet rundt'),
-    ('nrk-alltid-nyheter', u'Alltid Nyheter', u'Hyppige nyhetsoppdateringer - BBC kveld/natt.'),
-    ('nrk-sami-radio', u'Sámi Radio', u'Tilbud for samisktalende.'),
-    ('nrk-stortinget', u'Stortinget', u'Fra debattene.'),
-    ('nrk-alltid-folkemusikk', u'Folkemusikk', u'Fra NRKs unike folkemusikkarkiv.'),
-    ('nrk-jazz', u'Jazz', u'Jazz døgnet rundt.'),
-    ('nrk-sport', u'Sport', u'Levende og arkivsport, engelsk fotball.'),
-    ('nrk-urort', u'Urørt', u'Musikk.'),
-    ('nrk-gull', u'Gull', u'Godbiter fra arkivene.'),
-    ('nrk-super', u'Super', u'Barnetilbud.'),
-    ('nrk-p1-ostfold', u'P1 Østfold', u''),
-    ('nrk-p1-buskerud', u'P1 Buskerud', u''),
-    ('nrk-p1-sogn-og-fjordane', u'P1 Sogn og Fjordane', u''),
-    ('nrk-p1-rogaland', u'P1 Rogaland', u''),
-    ('nrk-p1-finnmark', u'P1 Finnmark', u''),
-    ('nrk-p1-hedmark', u'P1 Hedmark', u''),
-    ('nrk-p1-hordaland', u'P1 Hordaland', u''),
-    ('nrk-p1-more-og-romsdal', u'P1 Møre og Romsdal', u''),
-    ('nrk-p1-nordland', u'P1 Nordland', u''),
-    ('nrk-p1-oppland', u'P1 Oppland', u''),
-    ('nrk-p1-oslo', u'P1 Oslo', u''),
-    ('nrk-p1-telemark', u'P1 Telemark', u''),
-    ('nrk-p1-troms', u'P1 Troms', u''),
-    ('nrk-p1-trondelag', u'P1 Trøndelag', u''),
-    ('nrk-p1-vestfold', u'P1 Vestfold', u''),
-    ('nrk-p1-sorlandet', u'P1 Sørlandet', u''),
+    ('p1_ostlandssendingen', u'P1', u'Den brede kanalen for folk flest. Norges største radiokanal. Bredt distriktstilbud.'),
+    ('p2', u'P2', u'Kulturkanalen med kunst, kultur, nyheter, debatt og samfunnsstoff.'),
+    ('p3', u'P3', u'Ungdomskanal med mye pop og rock-musikk, humor og skreddersydde nyheter for de unge.'),
+    ('mp3', u'mPetre', u'Musikk for de yngre.'),
+    ('klassisk', u'Klassisk', u'Klassisk musikk døgnet rundt'),
+    ('alltid_nyheter', u'Alltid Nyheter', u'Hyppige nyhetsoppdateringer - BBC kveld/natt.'),
+    ('sami', u'Sámi Radio', u'Tilbud for samisktalende.'),
+    ('folkemusikk', u'Folkemusikk', u'Fra NRKs unike folkemusikkarkiv.'),
+    ('jazz', u'Jazz', u'Jazz døgnet rundt.'),
+    ('sport', u'Sport', u'Levende og arkivsport, engelsk fotball.'),
+    ('p3_urort', u'Urørt', u'Musikk.'),
+    ('gull', u'Gull', u'Godbiter fra arkivene.'),
+    ('super', u'Super', u'Barnetilbud.'),
+    ('p1_ostfold', u'P1 Østfold', u''),
+    ('p1_buskerud', u'P1 Buskerud', u''),
+    ('p1_sogn_og_fjordane', u'P1 Sogn og Fjordane', u''),
+    ('p1_rogaland', u'P1 Rogaland', u''),
+    ('p1_finnmark', u'P1 Finnmark', u''),
+    ('p1_hedmark_og_oppland', u'P1 Hedmark og Oppland', u''),
+    ('p1_hordaland', u'P1 Hordaland', u''),
+    ('p1_more_og_romsdal', u'P1 Møre og Romsdal', u''),
+    ('p1_nordland', u'P1 Nordland', u''),
+    ('p1_sorlandet', u'P1 Sørlandet', u''),
+    ('p1_telemark', u'P1 Telemark', u''),
+    ('p1_troms', u'P1 Troms', u''),
+    ('p1_trondelag', u'P1 Trøndelag', u''),
+    ('p1_vestfold', u'P1 Vestfold', u''),
+    ('p1_sorlandet', u'P1 Sørlandet', u'')
 )
 
 
@@ -50,7 +48,7 @@ def LiveRadioMenu(sender):
     
     # Adds all the station as track items
     for station in LIVE_RADIO_STATIONS:
-        url = '%s?channel=%s&quality=%s&format=ogg&protocol=ipv4' % \
+        url = '%s%s_mp3_%s' % \
             (LIVE_RADIO_BASEURL, station[0], Prefs.Get("radio_quality"))
             
         Log('Added stream: %s' % url)
