@@ -11,11 +11,11 @@ live tv, web tv, live radio and audio/video podcasts.
 
 Installation
 ============
+
+The plugin is now available in the Plex App Store.
+
 If installing manually, place the bundle in the Plex plugin folder: 
     ~/Library/Application Support/Plex Media Server/Plug-ins
-
-Automatic installers are available on GitHub:
-    http://github.com/jonklo/plex-nrk/downloads
 
 After installation, the plugin is available under the `Videos` section in 
 Plex.
